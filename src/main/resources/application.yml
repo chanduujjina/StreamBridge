@@ -1,0 +1,24 @@
+spring:
+  cloud:
+    function:
+      definition: consumerA;consumerB
+
+    stream:
+      bindings:
+        producer-out-0:
+          destination: Yodhin-topic
+
+        consumerA-in-0:
+          destination: Yodhin-topic
+          group: Yodhin-Group1
+
+        consumerB-in-0:
+          destination: Yodhin-topic
+          group: Yodhin-Group2
+
+      kafka:
+        binder:
+          brokers: localhost:9092
+
+server:
+  port: 8080
