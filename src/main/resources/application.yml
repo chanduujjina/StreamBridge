@@ -1,20 +1,43 @@
 spring:
   cloud:
     function:
-      definition: consumerA;consumerB
+      definition: consumerAP0;consumerAP1;consumerB;consumerC
 
     stream:
       bindings:
         producer-out-0:
           destination: Yodhin-topic
+        producer-out-1:
+          destination: Yodhin-topic1
+          producer:
+            partitionCount: 2
+            partitionKeyExpression: headers['partitionKey']
 
-        consumerA-in-0:
-          destination: Yodhin-topic
+        consumerAP0-in-0:
+          destination: Yodhin-topic1
           group: Yodhin-Group1
+          consumer:
+           partitioned: true
+           instance-index: 0
+           instance-count: 2
+           
+           
+        consumerAP1-in-0:
+          destination: Yodhin-topic1
+          group: Yodhin-Group1
+          consumer:
+           partitioned: true
+           instance-index: 1
+           instance-count: 2
+          
 
         consumerB-in-0:
           destination: Yodhin-topic
           group: Yodhin-Group2
+          
+        consumerC-in-0:
+          destination: Yodhin-topic
+          group: Yodhin-Group3
 
       kafka:
         binder:
